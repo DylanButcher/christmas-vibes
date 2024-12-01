@@ -19,16 +19,7 @@
       color: white;
       text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
       font-family: Arial, sans-serif;
-      opacity: 0; /* Initially hidden */
-      animation: fadeIn 2s ease-in-out 3s forwards, zoom 2s infinite 3s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-      to {
-        opacity: 1;
-      }
+      animation: zoom 2s infinite ease-in-out;
     }
     @keyframes zoom {
       0%, 100% {
@@ -42,9 +33,29 @@
 </head>
 <body>
 <h1>🎄 You Just Got Wham'd! 🎄</h1>
-<audio autoplay>
-  <source src="https://github.com/DylanButcher/christmas-vibes/raw/refs/heads/main/tune.mp3" type="audio/mp3">
+<audio id="audio" autoplay>
+  <source src="tune.mp3" type="audio/mp3">
   Your browser does not support the audio tag.
 </audio>
+<script>
+  // Debugging: Check if the audio element is loading
+  const audio = document.getElementById('audio');
+  audio.addEventListener('error', (e) => {
+    console.error('Audio failed to load. Check the file path or encoding.');
+  });
+
+  // Debugging: Log audio autoplay status
+  audio.addEventListener('play', () => {
+    console.log('Audio is playing.');
+  });
+
+  // Force play in case autoplay doesn't work
+  document.body.addEventListener('click', () => {
+    if (audio.paused) {
+      console.log('Manually starting audio...');
+      audio.play().catch(err => console.error('Failed to play audio:', err));
+    }
+  });
+</script>
 </body>
 </html>
