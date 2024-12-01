@@ -19,7 +19,15 @@
       color: white;
       text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
       font-family: Arial, sans-serif;
+      opacity: 0;
       animation: zoom 2s infinite ease-in-out;
+    }
+    #click-me {
+      font-size: 2rem;
+      color: white;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.8);
+      font-family: Arial, sans-serif;
+      cursor: pointer;
     }
     @keyframes zoom {
       0%, 100% {
@@ -32,29 +40,30 @@
   </style>
 </head>
 <body>
-<h1>🎄 You Just Got Wham'd! 🎄</h1>
-<audio id="audio" autoplay>
+<div id="click-me">Click Me</div>
+<h1 id="message">🎄 You Just Got Whammed! 🎄</h1>
+<audio id="audio">
   <source src="tune.mp3" type="audio/mp3">
   Your browser does not support the audio tag.
 </audio>
 <script>
-  // Debugging: Check if the audio element is loading
+  const clickMe = document.getElementById('click-me');
+  const message = document.getElementById('message');
   const audio = document.getElementById('audio');
-  audio.addEventListener('error', (e) => {
-    console.error('Audio failed to load. Check the file path or encoding.');
-  });
 
-  // Debugging: Log audio autoplay status
-  audio.addEventListener('play', () => {
-    console.log('Audio is playing.');
-  });
+  // Initially hide the message
+  message.style.opacity = 0;
 
-  // Force play in case autoplay doesn't work
-  document.body.addEventListener('click', () => {
-    if (audio.paused) {
-      console.log('Manually starting audio...');
+  // Add click event listener
+  clickMe.addEventListener('click', () => {
+    // Hide the "Click Me" text
+    clickMe.style.display = 'none';
+
+    // Wait 3 seconds, then show the message and play the sound
+    setTimeout(() => {
+      message.style.opacity = 1;
       audio.play().catch(err => console.error('Failed to play audio:', err));
-    }
+    }, 3000);
   });
 </script>
 </body>
